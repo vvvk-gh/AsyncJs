@@ -14,7 +14,7 @@ function download(url) {
     
         console.log(`Downloading from the ${url} `);
             if(!url.startsWith('http')){
-                reject(new Error('url needs to start with http'))
+              return reject(new Error('url needs to start with http'))
             }
     
         setTimeout(() => {
@@ -31,7 +31,7 @@ function compress(filePath , format) {
         
     console.log(`Compressing the file ${filePath}`);
     if(['zip','fz','gzip'].indexOf(format)=== -1){
-       reject(new Error ("We only support zip,fz and gzip formats"))
+       return reject(new Error ("We only support zip,fz and gzip formats"))
     }
     setTimeout(() => {
         let archive = `${filePath.split(".").shift()}.${format}`;
@@ -45,7 +45,7 @@ function upload(server , file) {
     return new Promise((resolve,reject)=>{
     console.log(`Uploading ${file} into the ${server}`);
     if(!server.startsWith('ftp://')){
-       reject(new Error("We can upload only to FTP servers"))
+       return reject(new Error("We can upload only to FTP servers"))
     }
     setTimeout(() => {
         let remotePath = `${server}/${file}`
@@ -65,7 +65,8 @@ function upload(server , file) {
 //     })
 
 //we can simplify it as the following
-download("http://www.amazon.com/amazonlogo.png")
+download("https://www.amazon.com/amazonlogo.png")
     .then( (file) => compress(file , 'zip'))
-    .then((archive) =>upload("ftp://files.com" ,archive) )
+    .then((archive) =>upload("ftp://files.com" ,archive))
+    .catch((err) => console.error(err))
 
