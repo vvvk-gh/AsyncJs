@@ -95,27 +95,36 @@ async function task3() {
 
 
 
-async function task(){
-    try{
-     const startTime = new Date().getTime()
-     //completed the tasks first
-     completed1 = task1()
-     completed2 = task2() 
-     completed3 = task3()
+// async function task(){
+//     try{
+//      const startTime = new Date().getTime()
+//      //completed the tasks first
+//      completed1 = task1()
+//      completed2 = task2() 
+//      completed3 = task3()
      
-     //and wait for the to be completed tasks nexr
-     await completed1;
-     await completed2;
-     await completed3;
+//      //and wait for the to be completed tasks nexr
+//      await completed1;
+//      await completed2;
+//      await completed3;
 
-     console.log((new Date().getTime()-startTime) / 1000)
-    } catch(err){
-        console.error(err)
-    }
-}
+//      console.log((new Date().getTime()-startTime) / 1000)
+//     } catch(err){
+//         console.error(err)
+//     }
+// }
 
 
-console.log("task started")
-task().then( ()=> console.info("task actually completed"));
-// this line gets printed before completing the task and thats what we mean as async
-console.log("task completed") 
+// console.log("task started")
+// task().then( ()=> console.info("task actually completed"));
+// // this line gets printed before completing the task and thats what we mean as async
+// console.log("task completed") 
+
+
+//promise.all
+
+Promise.all([
+    task1(),
+    task2(),
+    task3()
+]).then(()=> console.log(`all the tasks completed`))
